@@ -22,6 +22,8 @@ export const TaskBaseExample = (props: any) => {
                 changeTaskTitle={changeTitleCallback}
                 changeTaskStatus={changeStatusCallback}
                 todolistId={"todolistId1"}
+                entityStatus={"failed"}
+
             />
             <Task
                 task={{id: '2', status: TaskStatuses.New, title: "JS", todoListId: "todolistId1", description: '',
@@ -30,6 +32,7 @@ export const TaskBaseExample = (props: any) => {
                 changeTaskTitle={changeTitleCallback}
                 changeTaskStatus={changeStatusCallback}
                 todolistId={"todolistId2"}
+                entityStatus={"failed"}
             />
         </div>)
 }

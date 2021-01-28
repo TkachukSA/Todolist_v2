@@ -9,7 +9,7 @@ import {
 } from '../../api/todolists-api'
 import {Dispatch} from 'redux'
 import {AppRootStateType} from '../../app/store'
-import {setAppErrorAC, setAppErrorACType, setAppStatusAC, setAppStatusType} from "../../app/app-reducer";
+import {RequestStatusType, setAppErrorACType, setAppStatusAC, setAppStatusType} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState: TasksStateType = {}
@@ -65,7 +65,9 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
             const action = setTasksAC(tasks, todolistId)
             dispatch(action)
             dispatch(setAppStatusAC("succeeded"))
-        })
+        }).catch((err)=>{
+        handleServerNetworkError(err, dispatch)
+    })
 }
 export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC("loading"))
@@ -74,7 +76,9 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
             const action = removeTaskAC(taskId, todolistId)
             dispatch(action)
             dispatch(setAppStatusAC("succeeded"))
-        })
+        }).catch((err)=>{
+        handleServerNetworkError(err, dispatch)
+    })
 }
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC("loading"))
@@ -121,11 +125,9 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
                     const action = updateTaskAC(taskId, domainModel, todolistId)
                     dispatch(action)
                 }else {
-                    dispatch(setAppErrorAC("succeeded"))
+                    handleServerAppError(res.data, dispatch )
                 }
-                dispatch(setAppStatusAC("succeeded"))
             }).catch((err)=>{
-                debugger
             handleServerNetworkError(err, dispatch)
         })
 
@@ -140,8 +142,13 @@ export type UpdateDomainTaskModelType = {
     startDate?: string
     deadline?: string
 }
+
+type empt = {
+    entityStatus: RequestStatusType
+}
 export type TasksStateType = {
     [key: string]: Array<TaskType>
+
 }
 type ActionsType =
     | ReturnType<typeof removeTaskAC>
