@@ -3,9 +3,9 @@ import {Dispatch} from 'redux'
 import {
     RequestStatusType,
     setAppErrorAC,
-    setAppErrorACType,
+    SetAppErrorActionType,
     setAppStatusAC,
-    setAppStatusType
+    SetAppStatusActionType
 } from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -60,7 +60,8 @@ export const fetchTodolistsTC = () => {
             .then((res) => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC("succeeded"))
-            }).catch((err) => {
+            })
+            .catch((err) => {
             handleServerNetworkError(err, dispatch)
         })
     }
@@ -139,8 +140,8 @@ type ActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
-    | setAppErrorACType
-    | setAppStatusType
+    | SetAppErrorActionType
+    | SetAppStatusActionType
     | changeTodolistEntityStatusStatusType
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {

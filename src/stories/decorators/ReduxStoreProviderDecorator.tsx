@@ -35,8 +35,12 @@ const initialGlobalState: AppRootStateType = {
     },
     app: {
         status: "failed",
-        error: null
+        error: null,
+        initialized:false
     },
+    auth: {
+        isLoggedIn: true
+    }
 };
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState);

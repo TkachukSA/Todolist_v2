@@ -7,9 +7,12 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {Route, Switch, Redirect} from 'react-router-dom'
+import {Login} from "../login/Login";
 
 function App() {
-   const status = useSelector<AppRootStateType, RequestStatusType>((state)=>state.app.status)
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    const initialized = useSelector<AppRootStateType, boolean>((state) => state.app.initialized)
 
     return (
         <div className="App">
@@ -31,10 +34,16 @@ function App() {
 
             </AppBar>
             <Container fixed>
-                <TodolistsList/>
-            </Container>
-        </div>
-    )
-}
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <h1>Page non found</h1>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
 
-export default App
+                    </Container>
+                    </div>
+                    )
+                }
+
+                       export default App
