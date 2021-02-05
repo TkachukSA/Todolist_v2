@@ -21,8 +21,13 @@ export type loginParamsType = {
 
 export const authAPI = {
     login(data: loginParamsType) {
-        let promise = instance.post<ResponseType<{userId?: number}>>('auth/login', data)
+        let promise = instance.post<ResponseType<{ userId?: number }>>('auth/login', data)
         return promise
+    }, me() {
+        return instance.get<ResponseType<{ id: number, email: string, login: string }>>('auth/me')
+    },
+    logout() {
+        return instance.delete<ResponseType>('auth/login')
     }
 }
 export const todolistsAPI = {

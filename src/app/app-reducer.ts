@@ -1,4 +1,6 @@
 import {Dispatch} from "redux";
+import {authAPI} from "../api/todolists-api";
+import {setIsLoggedInAC} from "../login/auth-reducer";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -21,7 +23,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
             return {...state, status: action.status}
         case "APP/SET-ERROR":
             return {...state, error: action.error}
-        case "APP/SET-initialized":{
+        case "APP/SET-initialized": {
             return {...state, initialized: action.initialized}
         }
         default:
@@ -31,7 +33,17 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 
 type ActionsType = SetAppStatusActionType | SetAppErrorActionType | SetInitializedActionType
 
-export const setInitializedTC = ()=>(dispatch: Dispatch)=>{}
+export const setInitializedTC = () => (dispatch: Dispatch) => {
+    authAPI.me()
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(true))
+            } else {
+
+            }
+            dispatch(setInitializedAC(true))
+        })
+}
 
 export type  SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
 export type  SetInitializedActionType = ReturnType<typeof setInitializedAC>
