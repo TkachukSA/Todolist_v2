@@ -66,8 +66,8 @@ function App({demo = false}: PropsType) {
             </AppBar>
             <Container fixed>
                 <Switch>
-                    <Route path={'/login'} render={() => <Login/>}/>
-                    <Route exact path={'/'} render={() => <TodolistsList  demo={demo}/>}/>
+                    <Route exact path={'/login'} render={() => <Login/>}/>
+                    <Route  path={'/'} render={() => <TodolistsList  demo={demo}/>}/>
                     <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
                     <Redirect from={'*'} to={'/404'}/>
                 </Switch>
