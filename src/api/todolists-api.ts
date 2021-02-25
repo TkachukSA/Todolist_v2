@@ -1,35 +1,46 @@
 import axios from 'axios'
 
-const settings = {
+const instance = axios.create({
+    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
         'API-KEY': '7866738e-c5bf-440e-864d-4cc467150876'
     }
-}
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    ...settings
 })
 
 // api
-export type loginParamsType = {
+
+export type LoginParamsType = {
     email: string
     password: string
     rememberMe: boolean
     captcha?: string
 }
 
+type MeType={
+    id: string,
+    email: string,
+    login: string
+}
 export const authAPI = {
-    login(data: loginParamsType) {
-        let promise = instance.post<ResponseType<{ userId?: number }>>('auth/login', data)
-        return promise
-    }, me() {
-        return instance.get<ResponseType<{ id: number, email: string, login: string }>>('auth/me')
+    login(data: LoginParamsType) {
+        const pr=instance.post<ResponseType<{userId: number}>>('auth/Login', data)
+        return pr
+    },
+    me() {
+        const pr = instance.get<ResponseType<MeType>>('auth/me')
+        return pr
+
     },
     logout() {
-        return instance.delete<ResponseType>('auth/login')
+        const pr = instance.delete<ResponseType>('auth/Login')
+        return pr
+
     }
 }
+
+
+
 export const todolistsAPI = {
     getTodolists() {
         const promise = instance.get<TodolistType[]>('todo-lists');
@@ -72,13 +83,6 @@ export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D
-}
-
-export enum ResultCodeStatuses {
-    Succes = 0,
-    Error = 1,
-    Captcha = 10,
-
 }
 
 export enum TaskStatuses {

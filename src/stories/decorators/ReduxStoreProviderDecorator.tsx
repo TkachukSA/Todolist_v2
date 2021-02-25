@@ -36,7 +36,8 @@ const initialGlobalState: AppRootStateType = {
     app: {
         status: "failed",
         error: null,
-        initialized:false
+        isInitialized: false,
+
     },
     auth: {
         isLoggedIn: true

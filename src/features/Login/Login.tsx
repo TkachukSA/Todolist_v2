@@ -2,9 +2,9 @@ import React from 'react'
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "./auth-reducer";
-import {AppRootStateType} from "../app/store";
+import {AppRootStateType} from "../../app/store";
 import {Redirect} from 'react-router-dom';
+import {loginTC} from "./auth-reducer";
 
 export const Login = () => {
 
@@ -39,6 +39,7 @@ export const Login = () => {
     if (isLiginIn) {
         return <Redirect to={'/'}/>
     }
+
     return <Grid container justify="center">
         <Grid item xs={4}>
             <form onSubmit={formik.handleSubmit}>
