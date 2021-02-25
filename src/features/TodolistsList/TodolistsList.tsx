@@ -28,15 +28,12 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
     const dispatch = useDispatch()
 
-
     useEffect(() => {
         if (demo || !isLoggedIn) {
-            return;
+            return
         }
-
-        const thunk = fetchTodolistsTC()
-        dispatch(thunk)
-    }, [])
+        dispatch(fetchTodolistsTC())
+    }, [dispatch])
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
         const thunk = removeTaskTC(id, todolistId)
@@ -79,8 +76,9 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     }, [dispatch])
 
 
-    if (!isLoggedIn){
-        return <Redirect to={'/login'} />
+
+    if (!isLoggedIn) {
+        return <Redirect to={'/login'}/>
     }
 
     return <>

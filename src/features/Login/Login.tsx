@@ -36,7 +36,7 @@ export const Login = () => {
         },
 
     })
-    if (isLiginIn) {
+    if(isLiginIn){
         return <Redirect to={'/'}/>
     }
 
