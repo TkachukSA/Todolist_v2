@@ -27,12 +27,14 @@ type PropsType = {
 
 
 function App({demo = false}: PropsType) {
+    const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(initializeAppTC())
-    }, [])
+    }, [dispatch, demo])
     debugger
 
-    const dispatch = useDispatch()
+
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isLoginIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
