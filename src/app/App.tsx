@@ -25,7 +25,6 @@ type PropsType = {
 }
 
 
-
 function App({demo = false}: PropsType) {
     const dispatch = useDispatch()
 
@@ -47,9 +46,9 @@ function App({demo = false}: PropsType) {
     }
 
 
-
-
-    const logoutT = ()=>{dispatch(logoutTC())}
+    const logoutT = () => {
+        dispatch(logoutTC())
+    }
     return (
         <div className="App">
             <ErrorSnackbar/>
@@ -61,7 +60,7 @@ function App({demo = false}: PropsType) {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    {isLoginIn && <Button  onClick={logoutT} color="inherit">Logout</Button>}
+                    {isLoginIn && <Button onClick={logoutT} color="inherit">Logout</Button>}
 
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
@@ -69,7 +68,7 @@ function App({demo = false}: PropsType) {
             <Container fixed>
                 <Switch>
                     <Route exact path={'/login'} render={() => <Login/>}/>
-                    <Route  path={'/'} render={() => <TodolistsList  demo={demo}/>}/>
+                    <Route path={'/'} render={() => <TodolistsList demo={demo}/>}/>
                     <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
                     <Redirect from={'*'} to={'/404'}/>
                 </Switch>
